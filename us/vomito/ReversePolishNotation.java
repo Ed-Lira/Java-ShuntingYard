@@ -16,9 +16,7 @@ public class ReversePolishNotation {
         while (i < size) {
             Token current = tokens.elementAt(i);
             if (current.type == Token.TokenType.VARIABLE && current.getVariable().symbol.equalsIgnoreCase(variable)) {
-                output.push(new Token(value));
-            } else {
-                output.push(current);
+                current.setNumber(value);
             }
             i++;
         }
@@ -33,7 +31,7 @@ public class ReversePolishNotation {
         int size = input.size();
         while (i < size) {
             Token current = input.elementAt(i);
-            if (current.isNumber()) {
+            if (current.isNumberOrVar()) {
                 output.push(current.getNumber());
             } else if (current.isOperator()) {
                 int args = current.getOperator().arguements;

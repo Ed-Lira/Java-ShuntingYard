@@ -53,6 +53,10 @@ public class Token {
         return number;
     }
 
+    public void setNumber(double num){
+        this.number = num;
+    }
+
     public Variable getVariable() {
         return variable;
     }
