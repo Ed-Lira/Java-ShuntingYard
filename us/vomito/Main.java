@@ -1,6 +1,7 @@
 package us.vomito;
 
 import us.vomito.operators.*;
+import us.vomito.operators.booleanOperators.*;
 import us.vomito.operators.functions.AbsoluteValueFunction;
 import us.vomito.operators.functions.CosineFunction;
 import us.vomito.operators.functions.Function;
@@ -22,7 +23,13 @@ public class Main {
                         new MultiplicationOperator(),
                         new DivisionOperator(),
                         new ExponentiationOperator(),
-                        new NegativeOperator()
+                        new NegativeOperator(),
+                        new EqualToOperator(),
+                        new NotEqualToOperator(),
+                        new GreaterThanOrEqualToOperator(),
+                        new LessThanOrEqualToOperator(),
+                        new GreaterThanOperator(),
+                        new LessThanOperator()
 
                 };
         Function[] funcs =
@@ -32,7 +39,7 @@ public class Main {
                         new AbsoluteValueFunction()
                 };
         MathTokenizer ml = new MathTokenizer(ops, funcs);
-        Stack<Token> st = ml.tokenize("sin(x)", true);
+        Stack<Token> st = ml.tokenize("(31!=1)*2*x", true);
 
         for (Token s : st) {
             System.out.println(s);
@@ -51,5 +58,6 @@ public class Main {
         System.out.println("\n\n\n\n\n\nEvaluating...\n");
 
         System.out.print(rpn.replaceVar("x", 90).evaluate());
+        //System.out.print(rpn.evaluate());
     }
 }

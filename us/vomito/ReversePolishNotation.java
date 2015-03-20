@@ -10,7 +10,6 @@ public class ReversePolishNotation {
     }
 
     public ReversePolishNotation replaceVar(String variable, double value) {
-        Stack<Token> output = new Stack<Token>();
         int i = 0;
         int size = tokens.size();
         while (i < size) {
@@ -20,7 +19,6 @@ public class ReversePolishNotation {
             }
             i++;
         }
-        tokens = output;
         return this;
     }
 
