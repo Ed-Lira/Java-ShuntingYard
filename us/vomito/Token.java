@@ -13,21 +13,26 @@ public class Token {
     private boolean isOperator;
     private boolean isNumber;
     private boolean isParenthesis;
+    private int location;
+    private int originalLength;
 
     public enum TokenType {OPERATOR, NUMBER, PARENTHESIS, FUNCTION, VARIABLE}
 
     public TokenType type;
 
-    public Token(Operator o) {
+    public Token(Operator o, int location) {
+        this.location = location;
         this.operator = o;
+        originalLength = o.getSymbol().length();
         this.isOperator = true;
         this.isNumber = false;
         this.isParenthesis = o instanceof LeftGroupingOperator || o instanceof RightGroupingOperator;
-
         this.type = TokenType.OPERATOR;
     }
 
-    public Token(double number) {
+    public Token(double number, int location, int orgLength) {
+        this.originalLength = orgLength;
+        this.location = location;
         this.number = number;
         this.isOperator = false;
         this.isNumber = true;
@@ -36,8 +41,10 @@ public class Token {
         this.type = TokenType.NUMBER;
     }
 
-    public Token(Variable var) {
+    public Token(Variable var, int location) {
+        this.location = location;
         this.variable = var;
+        this.originalLength = this.variable.symbol.length();
         this.isOperator = false;
         this.isNumber = false;
         this.isParenthesis = false;
@@ -53,7 +60,7 @@ public class Token {
         return number;
     }
 
-    public void setNumber(double num){
+    public void setNumber(double num) {
         this.number = num;
     }
 
@@ -94,16 +101,24 @@ public class Token {
         }
     }
 
+    public int getLocation() {
+        return location;
+    }
+
+    public int getOriginalLength() {
+        return originalLength;
+    }
+
     public String toString() {
         switch (this.type) {
             case PARENTHESIS:
             case FUNCTION:
             case OPERATOR:
-                return this.getOperator().symbol + " " + this.getOperator().getClass().getSimpleName();
+                return this.getOperator().symbol + " " + this.getOperator().getClass().getSimpleName() + " " + getLocation();
             case NUMBER:
-                return this.getNumber() + "";
+                return this.getNumber() + " " + getLocation();
             case VARIABLE:
-                return this.variable.symbol + " " + this.variable.getClass().getSimpleName();
+                return this.variable.symbol + " " + this.variable.getClass().getSimpleName() + " " + getLocation();
             default:
                 return "?";
         }

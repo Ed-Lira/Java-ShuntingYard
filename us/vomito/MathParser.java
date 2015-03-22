@@ -1,5 +1,6 @@
 package us.vomito;
 
+import us.vomito.Exception.MismatchedParenthesisException;
 import us.vomito.operators.LeftGroupingOperator;
 import us.vomito.operators.Operator;
 import us.vomito.operators.RightGroupingOperator;
@@ -9,10 +10,9 @@ import java.util.Stack;
 public class MathParser {
 
     public MathParser(Operator[] ops) {
-        Operator[] operators = ops;
     }
 
-    public ReversePolishNotation stackToReversePolish(Stack<Token> input) {
+    public ReversePolishNotation stackToReversePolish(Stack<Token> input, String originalExpression) throws MismatchedParenthesisException {
         Stack<Token> output = new Stack<Token>();
         Stack<Token> operators = new Stack<Token>();
         int index = 0;
@@ -38,7 +38,7 @@ public class MathParser {
                 if (!operators.empty() && operators.peek().getOperator() instanceof LeftGroupingOperator) {
                     operators.pop();
                 } else {
-                    System.out.println("Mismatched Parenthesis");
+                    throw new MismatchedParenthesisException(originalExpression, current.getLocation());
                 }
                 //If the token at the top of the stack is a function token, pop it onto the output queue.
             }
@@ -48,7 +48,7 @@ public class MathParser {
         while (!operators.isEmpty()) {
 
             if (operators.firstElement().getOperator() instanceof LeftGroupingOperator || operators.firstElement().getOperator() instanceof LeftGroupingOperator) {
-                System.out.println("Mismatched Parenthesis");
+                throw new MismatchedParenthesisException(originalExpression, originalExpression.length());
             }
             output.add(operators.pop());
 

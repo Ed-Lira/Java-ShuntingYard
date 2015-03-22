@@ -1,5 +1,7 @@
 package us.vomito;
 
+import us.vomito.Exception.MismatchedParenthesisException;
+import us.vomito.Exception.UnrecognizedTokenException;
 import us.vomito.operators.*;
 import us.vomito.operators.booleanOperators.*;
 import us.vomito.operators.functions.AbsoluteValueFunction;
@@ -39,25 +41,32 @@ public class Main {
                         new AbsoluteValueFunction()
                 };
         MathTokenizer ml = new MathTokenizer(ops, funcs);
-        Stack<Token> st = ml.tokenize("(31!=1)*2*x", true);
+        try {
+            InfixNotation in = new InfixNotation("sin((31.0!=1*2*x))", ops, funcs);
+            ReversePolishNotation out = in.getReversePolishNotation();
+            double outValue = out.evaluate();
 
-        for (Token s : st) {
-            System.out.println(s);
+
+            for (Token s : in.tokens) {
+                System.out.println(s);
+            }
+
+            System.out.println("\n\n\n\n\n\nParsing...\n");
+
+            Stack<Token> parsed = out.tokens;
+            for (Token s : parsed) {
+                System.out.println(s);
+            }
+
+
+            System.out.println("\n\n\n\n\n\nEvaluating...\n");
+
+            System.out.print(out.replaceVar("x", 90).evaluate());
+            //System.out.print(rpn.evaluate());
+        } catch (UnrecognizedTokenException ute) {
+            System.out.println(ute.getMultiLineMessage());
+        } catch (MismatchedParenthesisException mpe) {
+            System.out.println(mpe.getMultiLineMessage());
         }
-
-        System.out.println("\n\n\n\n\n\nParsing...\n");
-
-        MathParser mp = new MathParser(ops);
-        ReversePolishNotation rpn = mp.stackToReversePolish(st);
-        Stack<Token> parsed = rpn.tokens;
-        for (Token s : parsed) {
-            System.out.println(s);
-        }
-
-
-        System.out.println("\n\n\n\n\n\nEvaluating...\n");
-
-        System.out.print(rpn.replaceVar("x", 90).evaluate());
-        //System.out.print(rpn.evaluate());
     }
 }
