@@ -1,4 +1,4 @@
-package us.vomito;
+package us.vomito.infix;
 
 import us.vomito.Exception.MismatchedParenthesisException;
 import us.vomito.operators.LeftGroupingOperator;
@@ -9,7 +9,7 @@ import java.util.Stack;
 
 public class MathParser {
 
-    public MathParser(Operator[] ops) {
+    public MathParser() {
     }
 
     public ReversePolishNotation stackToReversePolish(Stack<Token> input, String originalExpression) throws MismatchedParenthesisException {

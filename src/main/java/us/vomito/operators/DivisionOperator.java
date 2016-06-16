@@ -13,7 +13,7 @@ public class DivisionOperator extends Operator {
 
     @Override
     public double execute(double[] values) {
-        return values[0] / values[1];
+        return values[1] / values[0];
     }
 
 

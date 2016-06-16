@@ -2,6 +2,10 @@ package us.vomito;
 
 import us.vomito.Exception.MismatchedParenthesisException;
 import us.vomito.Exception.UnrecognizedTokenException;
+import us.vomito.infix.InfixNotation;
+import us.vomito.infix.ReversePolishNotation;
+import us.vomito.infix.SyntaxSystem;
+import us.vomito.infix.Token;
 import us.vomito.operators.*;
 import us.vomito.operators.booleanOperators.*;
 import us.vomito.operators.functions.AbsoluteValueFunction;
@@ -10,8 +14,6 @@ import us.vomito.operators.functions.Function;
 import us.vomito.operators.functions.SineFunction;
 
 import java.util.Stack;
-
-import static us.vomito.MathTokenizer.*;
 
 public class Main {
 
@@ -42,20 +44,21 @@ public class Main {
                         new AbsoluteValueFunction()
                 };
 
-        MathTokenizer ml = new MathTokenizer.Builder()
-                .addOperators(ops)
-                .addFunctions(funcs)
-                .build();
 
         try {
-            InfixNotation in = new InfixNotation("sin((31.0!=1*2*x))", ops, funcs);
+            SyntaxSystem syntaxSystem = new SyntaxSystem.Builder()
+                    .addOperators(ops)
+                    .addFunctions(funcs)
+                    .build();
+            InfixNotation in = syntaxSystem.buildExpression("sin((31.0!=1*2*x))");
             ReversePolishNotation out = in.getReversePolishNotation();
             double outValue = out.evaluate();
 
-
-            for (Token s : in.tokens) {
+/**
+            for (Token s : in.) {
                 System.out.println(s);
             }
+ */
 
             System.out.println("\n\n\n\n\n\nParsing...\n");
 

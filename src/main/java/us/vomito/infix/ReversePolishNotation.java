@@ -1,4 +1,4 @@
-package us.vomito;
+package us.vomito.infix;
 
 import java.util.Stack;
 

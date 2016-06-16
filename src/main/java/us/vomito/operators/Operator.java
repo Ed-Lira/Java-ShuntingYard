@@ -1,6 +1,6 @@
 package us.vomito.operators;
 
-import us.vomito.Token;
+import us.vomito.infix.Token;
 
 import java.util.regex.Pattern;
 

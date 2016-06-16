@@ -1,22 +1,23 @@
-package us.vomito;
+package us.vomito.infix;
 
 import us.vomito.Exception.UnrecognizedTokenException;
 import us.vomito.Variables.Variable;
 import us.vomito.operators.Operator;
 import us.vomito.operators.functions.Function;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
 public class MathTokenizer {
     static public final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
-    private List<Operator> operators = new ArrayList<Operator>();
-    private List<Function> functions = new ArrayList<Function>();
+    private List<Operator> operators;
+    private List<Function> functions;
     public String expression;
 
-    private MathTokenizer() {}
+    protected MathTokenizer(List<Operator> operators, List<Function> functions) {
+        this.operators = operators;
+        this.functions = functions;
+    }
 
     public Stack<Token> tokenize(String expression, Boolean noSpacing) throws UnrecognizedTokenException {
         this.expression = expression;
@@ -188,36 +189,5 @@ public class MathTokenizer {
         return cleanTokens;
     }
 
-
-    public static class Builder{
-        private MathTokenizer tokenizer;
-        public Builder(){
-            tokenizer = new MathTokenizer();
-        }
-
-        public Builder addOperator(Operator o){
-            tokenizer.operators.add(o);
-            return this;
-        }
-
-        public Builder addFunction(Function f){
-            tokenizer.functions.add(f);
-            return this;
-        }
-
-        public Builder addOperators(Operator[] ops){
-            Collections.addAll(tokenizer.operators,ops);
-            return this;
-        }
-
-        public Builder addFunctions(Function[] funs){
-            Collections.addAll(tokenizer.functions, funs);
-            return this;
-        }
-
-        public MathTokenizer build(){
-            return tokenizer;
-        }
-    }
 
 }
