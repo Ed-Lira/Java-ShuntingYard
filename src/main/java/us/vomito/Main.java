@@ -32,7 +32,6 @@ public class Main {
                         new LessThanOrEqualToOperator(),
                         new GreaterThanOperator(),
                         new LessThanOperator()
-
                 };
         Function[] funcs =
                 {
