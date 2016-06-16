@@ -18,7 +18,10 @@ public class InfixNotation {
         originalExpression = expression;
         this.ops = ops;
         this.functions = funcs;
-        MathTokenizer mt = new MathTokenizer(ops, funcs);
+        MathTokenizer mt = new MathTokenizer.Builder()
+                .addOperators(ops)
+                .addFunctions(funcs)
+                .build();
         tokens = mt.tokenize(expression, false);
         MathParser mp = new MathParser(ops);
         rpn = mp.stackToReversePolish(tokens, expression);
