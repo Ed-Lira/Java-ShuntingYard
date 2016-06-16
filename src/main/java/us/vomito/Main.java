@@ -11,6 +11,8 @@ import us.vomito.operators.functions.SineFunction;
 
 import java.util.Stack;
 
+import static us.vomito.MathTokenizer.*;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -39,7 +41,12 @@ public class Main {
                         new CosineFunction(),
                         new AbsoluteValueFunction()
                 };
-        MathTokenizer ml = new MathTokenizer(ops, funcs);
+
+        MathTokenizer ml = new MathTokenizer.Builder()
+                .addOperators(ops)
+                .addFunctions(funcs)
+                .build();
+
         try {
             InfixNotation in = new InfixNotation("sin((31.0!=1*2*x))", ops, funcs);
             ReversePolishNotation out = in.getReversePolishNotation();
